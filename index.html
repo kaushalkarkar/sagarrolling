@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sagar Rolling Shutters</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --red:#cc0000;
+  --dark:#1a1a1a;
+  --gray:#444;
+  --light:#f5f5f5;
+  --border:#ddd;
+}
+body{font-family:'Roboto',sans-serif;color:var(--dark);overflow-x:hidden;}
+a{text-decoration:none;color:inherit;}
+
+/* ── NAVBAR ── */
+nav{
+  position:fixed;top:0;left:0;width:100%;z-index:999;
+  background:rgba(20,20,20,0.96);
+  backdrop-filter:blur(8px);
+  border-bottom:3px solid var(--red);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 40px;height:70px;
+}
+.nav-logo{display:flex;align-items:center;gap:12px;}
+.logo-box{
+  background:white;padding:6px 14px;border-radius:4px;
+  display:flex;align-items:baseline;gap:2px;
+}
+.logo-s{font-family:'Oswald',sans-serif;font-size:32px;font-weight:700;color:var(--red);}
+.logo-agar{font-family:'Oswald',sans-serif;font-size:28px;font-weight:700;color:var(--dark);}
+.logo-sub{font-family:'Roboto',sans-serif;font-size:9px;font-weight:700;color:#888;letter-spacing:2px;text-transform:uppercase;}
+.nav-links{display:flex;gap:30px;list-style:none;}
+.nav-links a{
+  font-family:'Roboto',sans-serif;font-size:13px;font-weight:500;
+  color:rgba(255,255,255,0.85);letter-spacing:1px;text-transform:uppercase;
+  padding:6px 0;border-bottom:2px solid transparent;
+  transition:color 0.2s,border-color 0.2s;
+}
+.nav-links a:hover{color:#fff;border-color:var(--red);}
+.nav-cta{
+  background:var(--red);color:white;
+  font-family:'Roboto',sans-serif;font-size:12px;font-weight:700;
+  letter-spacing:1px;text-transform:uppercase;
+  padding:10px 22px;border-radius:3px;
+  transition:background 0.2s;
+}
+.nav-cta:hover{background:#aa0000;}
+
+/* ── HERO ── */
+.hero{
+  min-height:100vh;
+  background:linear-gradient(135deg,#0d0d0d 0%,#1a1a1a 40%,#2a0000 100%);
+  display:flex;align-items:center;
+  padding:90px 40px 40px;
+  position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;top:0;left:0;right:0;bottom:0;
+  background:repeating-linear-gradient(0deg,transparent,transparent 28px,rgba(204,0,0,0.04) 28px,rgba(204,0,0,0.04) 30px);
+  pointer-events:none;
+}
+.hero-content{max-width:620px;z-index:2;position:relative;}
+.hero-tag{
+  display:inline-block;background:var(--red);
+  color:white;font-size:11px;font-weight:700;letter-spacing:3px;
+  text-transform:uppercase;padding:6px 16px;border-radius:2px;
+  margin-bottom:24px;
+}
+.hero h1{
+  font-family:'Oswald',sans-serif;font-size:72px;font-weight:700;
+  color:white;line-height:1;margin-bottom:8px;
+  text-transform:uppercase;
+}
+.hero h1 span{color:var(--red);}
+.hero-sub{
+  font-family:'Oswald',sans-serif;font-size:26px;font-weight:400;
+  color:rgba(255,255,255,0.6);letter-spacing:4px;text-transform:uppercase;
+  margin-bottom:20px;
+}
+.hero-desc{
+  font-size:15px;color:rgba(255,255,255,0.65);line-height:1.8;
+  max-width:480px;margin-bottom:36px;
+  border-left:3px solid var(--red);padding-left:16px;
+}
+.hero-btns{display:flex;gap:16px;flex-wrap:wrap;}
+.btn-primary{
+  background:var(--red);color:white;
+  font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  padding:14px 32px;border-radius:3px;
+  transition:background 0.2s,transform 0.1s;display:inline-block;
+}
+.btn-primary:hover{background:#aa0000;transform:translateY(-1px);}
+.btn-outline{
+  border:2px solid rgba(255,255,255,0.3);color:white;
+  font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  padding:13px 32px;border-radius:3px;
+  transition:border-color 0.2s,background 0.2s;display:inline-block;
+}
+.btn-outline:hover{border-color:white;background:rgba(255,255,255,0.08);}
+/* Shutter graphic right */
+.hero-graphic{
+  position:absolute;right:-20px;top:50%;transform:translateY(-50%);
+  width:420px;opacity:0.15;
+}
+.shutter-strips{display:flex;flex-direction:column;gap:6px;}
+.strip{
+  height:14px;background:linear-gradient(90deg,#888,#ccc,#888);
+  border-radius:2px;
+}
+/* Stats bar */
+.hero-stats{
+  display:flex;gap:40px;margin-top:48px;
+  padding-top:32px;border-top:1px solid rgba(255,255,255,0.1);
+}
+.stat-item{text-align:center;}
+.stat-num{
+  font-family:'Oswald',sans-serif;font-size:36px;font-weight:700;
+  color:var(--red);display:block;
+}
+.stat-label{font-size:11px;color:rgba(255,255,255,0.5);letter-spacing:2px;text-transform:uppercase;}
+
+/* ── SECTION BASE ── */
+section{padding:80px 40px;}
+.section-label{
+  font-size:11px;font-weight:700;letter-spacing:4px;text-transform:uppercase;
+  color:var(--red);margin-bottom:10px;
+}
+.section-title{
+  font-family:'Oswald',sans-serif;font-size:42px;font-weight:700;
+  text-transform:uppercase;color:var(--dark);margin-bottom:16px;line-height:1.1;
+}
+.section-title span{color:var(--red);}
+.section-line{
+  width:60px;height:4px;background:var(--red);margin-bottom:20px;
+}
+.section-desc{font-size:15px;color:var(--gray);line-height:1.8;max-width:600px;}
+
+/* ── SERVICES ── */
+.services{background:#f8f8f8;}
+.services-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:24px;margin-top:48px;
+}
+.service-card{
+  background:white;border-radius:6px;overflow:hidden;
+  border:1px solid var(--border);
+  transition:transform 0.2s,box-shadow 0.2s;
+}
+.service-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,0.12);}
+.service-card-top{
+  background:var(--dark);height:6px;
+  position:relative;overflow:hidden;
+}
+.service-card-top::after{
+  content:'';position:absolute;left:0;top:0;width:40%;height:100%;background:var(--red);
+}
+.service-icon{
+  font-size:38px;padding:28px 28px 12px;display:block;
+}
+.service-card h3{
+  font-family:'Oswald',sans-serif;font-size:20px;font-weight:600;
+  color:var(--dark);padding:0 28px 10px;text-transform:uppercase;
+}
+.service-card p{font-size:14px;color:var(--gray);line-height:1.7;padding:0 28px 28px;}
+
+/* ── PRODUCTS / GALLERY ── */
+.gallery-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:16px;margin-top:48px;
+}
+.gallery-item{
+  position:relative;overflow:hidden;border-radius:6px;
+  aspect-ratio:4/3;background:#eee;
+  border:1px solid var(--border);
+}
+.gallery-item img{
+  width:100%;height:100%;object-fit:cover;
+  transition:transform 0.4s;display:block;
+}
+.gallery-item:hover img{transform:scale(1.05);}
+.gallery-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(0,0,0,0.8) 0%,transparent 60%);
+  display:flex;align-items:flex-end;padding:16px;
+  opacity:0;transition:opacity 0.3s;
+}
+.gallery-item:hover .gallery-overlay{opacity:1;}
+.gallery-overlay span{color:white;font-size:13px;font-weight:600;letter-spacing:1px;}
+.gallery-item.featured{grid-column:span 2;aspect-ratio:16/7;}
+
+/* ── WHY US ── */
+.why-us{background:var(--dark);color:white;}
+.why-us .section-title{color:white;}
+.why-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:24px;margin-top:48px;
+}
+.why-card{
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.08);
+  border-top:3px solid var(--red);
+  border-radius:4px;padding:28px 24px;
+  transition:background 0.2s;
+}
+.why-card:hover{background:rgba(255,255,255,0.07);}
+.why-num{
+  font-family:'Oswald',sans-serif;font-size:48px;font-weight:700;
+  color:var(--red);opacity:0.5;line-height:1;margin-bottom:8px;
+}
+.why-card h4{
+  font-family:'Oswald',sans-serif;font-size:18px;font-weight:600;
+  color:white;text-transform:uppercase;margin-bottom:10px;
+}
+.why-card p{font-size:13px;color:rgba(255,255,255,0.55);line-height:1.7;}
+
+/* ── CONTACT ── */
+.contact{background:#f8f8f8;}
+.contact-wrap{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:48px;margin-top:48px;align-items:start;
+}
+.contact-info h3{
+  font-family:'Oswald',sans-serif;font-size:26px;
+  font-weight:600;text-transform:uppercase;
+  color:var(--dark);margin-bottom:24px;
+}
+.contact-item{
+  display:flex;gap:16px;align-items:flex-start;
+  margin-bottom:22px;
+  padding:18px;background:white;border-radius:6px;
+  border:1px solid var(--border);
+  border-left:4px solid var(--red);
+}
+.contact-icon{font-size:22px;flex-shrink:0;margin-top:2px;}
+.contact-item strong{
+  display:block;font-size:11px;font-weight:700;
+  color:var(--red);letter-spacing:2px;text-transform:uppercase;
+  margin-bottom:4px;
+}
+.contact-item span{font-size:14px;color:var(--dark);line-height:1.6;}
+/* Form */
+.contact-form h3{
+  font-family:'Oswald',sans-serif;font-size:26px;
+  font-weight:600;text-transform:uppercase;
+  color:var(--dark);margin-bottom:24px;
+}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
+.form-group{display:flex;flex-direction:column;gap:6px;margin-bottom:16px;}
+.form-group label{font-size:11px;font-weight:700;color:var(--gray);letter-spacing:1px;text-transform:uppercase;}
+.form-group input,
+.form-group textarea,
+.form-group select{
+  border:1.5px solid var(--border);border-radius:4px;
+  padding:12px 14px;font-size:14px;font-family:'Roboto',sans-serif;
+  color:var(--dark);background:white;
+  transition:border-color 0.2s;outline:none;
+}
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus{border-color:var(--red);}
+.form-group textarea{height:120px;resize:vertical;}
+.btn-submit{
+  width:100%;background:var(--red);color:white;
+  font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  padding:15px;border:none;border-radius:4px;cursor:pointer;
+  font-family:'Roboto',sans-serif;
+  transition:background 0.2s;
+}
+.btn-submit:hover{background:#aa0000;}
+
+/* ── FOOTER ── */
+footer{
+  background:#0d0d0d;color:rgba(255,255,255,0.6);
+  padding:40px;text-align:center;
+  border-top:3px solid var(--red);
+}
+.footer-logo{
+  font-family:'Oswald',sans-serif;font-size:32px;font-weight:700;
+  margin-bottom:8px;
+}
+.footer-logo span{color:var(--red);}
+.footer-tagline{font-size:11px;letter-spacing:3px;text-transform:uppercase;margin-bottom:20px;color:rgba(255,255,255,0.35);}
+.footer-links{display:flex;justify-content:center;gap:24px;margin-bottom:20px;flex-wrap:wrap;}
+.footer-links a{font-size:12px;color:rgba(255,255,255,0.4);letter-spacing:1px;transition:color 0.2s;}
+.footer-links a:hover{color:var(--red);}
+.footer-copy{font-size:12px;color:rgba(255,255,255,0.25);}
+
+/* ── FLOATING CALL BUTTON ── */
+.float-call{
+  position:fixed;bottom:28px;right:28px;z-index:998;
+  background:var(--red);color:white;
+  width:60px;height:60px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:26px;box-shadow:0 4px 20px rgba(204,0,0,0.5);
+  transition:transform 0.2s,box-shadow 0.2s;
+}
+.float-call:hover{transform:scale(1.1);box-shadow:0 6px 30px rgba(204,0,0,0.7);}
+
+/* ── TICKER ── */
+.ticker{
+  background:var(--red);color:white;
+  padding:10px 0;overflow:hidden;white-space:nowrap;
+}
+.ticker-inner{
+  display:inline-block;
+  animation:ticker 28s linear infinite;
+  font-size:13px;font-weight:500;letter-spacing:1px;
+}
+@keyframes ticker{0%{transform:translateX(100vw);}100%{transform:translateX(-100%);}}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  nav{padding:0 20px;}
+  .nav-links{display:none;}
+  .hero{padding:100px 20px 40px;}
+  .hero h1{font-size:48px;}
+  section{padding:60px 20px;}
+  .gallery-grid{grid-template-columns:1fr 1fr;}
+  .gallery-item.featured{grid-column:span 2;}
+  .contact-wrap{grid-template-columns:1fr;}
+  .form-row{grid-template-columns:1fr;}
+}
+@media(max-width:600px){
+  .hero h1{font-size:36px;}
+  .hero-stats{gap:20px;}
+  .stat-num{font-size:26px;}
+  .gallery-grid{grid-template-columns:1fr;}
+  .gallery-item.featured{grid-column:span 1;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <div class="nav-logo">
+    <div class="logo-box">
+      <span class="logo-s">S</span><span class="logo-agar">agar</span>
+    </div>
+    <div class="logo-sub">Rolling Shutters</div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#products">Products</a></li>
+    <li><a href="#why-us">Why Us</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="tel:+919898268000" class="nav-cta">📞 Call Now</a>
+</nav>
+
+<!-- TICKER -->
+<div class="ticker" style="margin-top:70px;">
+  <span class="ticker-inner">
+    ⚙️ Manufacturer of All Types of Rolling Shutters &nbsp;|&nbsp;
+    🔧 Gear Type Rolling Shutters &amp; Rolling Grill &nbsp;|&nbsp;
+    ⚡ Electric &amp; Remote Controlled Rolling Shutters &nbsp;|&nbsp;
+    🏭 Rolling Shutters Raw Material &nbsp;|&nbsp;
+    🔩 Steel Reseller &amp; Fabrication Works &nbsp;|&nbsp;
+    📞 Call: +91 98982 68000 &nbsp;&nbsp;&nbsp;&nbsp;
+  </span>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <!-- Background shutter texture -->
+  <div class="hero-graphic">
+    <div class="shutter-strips">
+      <div class="strip"></div><div class="strip"></div><div class="strip"></div>
+      <div class="strip"></div><div class="strip"></div><div class="strip"></div>
+      <div class="strip"></div><div class="strip"></div><div class="strip"></div>
+      <div class="strip"></div><div class="strip"></div><div class="strip"></div>
+      <div class="strip"></div><div class="strip"></div><div class="strip"></div>
+      <div class="strip"></div><div class="strip"></div><div class="strip"></div>
+      <div class="strip"></div><div class="strip"></div><div class="strip"></div>
+    </div>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-tag">® Registered Brand · Est. Since 2010</div>
+    <h1><span>Sagar</span><br/>Rolling<br/>Shutters</h1>
+    <p class="hero-sub">Morbi, Gujarat</p>
+    <p class="hero-desc">
+      All Types of Steel Reseller &amp; Mfg. Rolling Shutters &amp; Fabrication Works.
+      From small shops to large industrial warehouses — we deliver strength, security &amp; quality.
+    </p>
+    <div class="hero-btns">
+      <a href="#contact" class="btn-primary">Get Free Quote</a>
+      <a href="#products" class="btn-outline">View Our Work</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <span class="stat-num">500+</span>
+        <span class="stat-label">Projects Done</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">15+</span>
+        <span class="stat-label">Years Exp.</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">100%</span>
+        <span class="stat-label">Quality Assured</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="section-label">What We Offer</div>
+  <h2 class="section-title">Our <span>Services</span></h2>
+  <div class="section-line"></div>
+  <p class="section-desc">We manufacture and supply all types of rolling shutters for residential, commercial, and industrial use — built to last.</p>
+
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-card-top"></div>
+      <span class="service-icon">🏭</span>
+      <h3>Manual Rolling Shutters</h3>
+      <p>Heavy-duty galvanized steel rolling shutters for shops, warehouses, and factories. Smooth operation with durable locking systems.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-card-top"></div>
+      <span class="service-icon">⚙️</span>
+      <h3>Gear Type Shutters</h3>
+      <p>Spring-balanced gear type rolling shutters with easy hand-operated mechanism. Ideal for medium to large openings.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-card-top"></div>
+      <span class="service-icon">⚡</span>
+      <h3>Electric & Remote Shutters</h3>
+      <p>Motorized rolling shutters with remote control for ultimate convenience. Smooth, quiet, and fully automated operation.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-card-top"></div>
+      <span class="service-icon">🔩</span>
+      <h3>Rolling Grill Shutters</h3>
+      <p>Ventilated rolling grills for showrooms, banks, and retail outlets. Provides security while maintaining visibility and airflow.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-card-top"></div>
+      <span class="service-icon">🔧</span>
+      <h3>Fabrication Works</h3>
+      <p>Custom steel fabrication, repairs, and AMC (Annual Maintenance Contracts) for all types of shutters and gates.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-card-top"></div>
+      <span class="service-icon">📦</span>
+      <h3>Raw Material Supply</h3>
+      <p>Rolling shutter lath, bottom rail, side guides, springs, locks and all steel raw materials supplied at wholesale rates.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS / GALLERY -->
+<section id="products" style="background:white;">
+  <div class="section-label">Our Work</div>
+  <h2 class="section-title">Installed <span>Projects</span></h2>
+  <div class="section-line"></div>
+  <p class="section-desc">From single shop shutters to large industrial installations — see the quality of our work across Gujarat.</p>
+
+  <div class="gallery-grid">
+    <!-- Using placeholder colored blocks since actual images can't be embedded directly -->
+    <div class="gallery-item featured" style="background:linear-gradient(135deg,#1a1a1a,#333);">
+      <div style="width:100%;height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:20px;">
+        <!-- Shutter illustration -->
+        <div style="width:90%;max-width:500px;border:3px solid #555;border-radius:4px;overflow:hidden;">
+          <div style="background:#888;padding:8px 16px;display:flex;gap:6px;align-items:center;">
+            <div style="width:8px;height:8px;border-radius:50%;background:#cc0000;"></div>
+            <span style="color:white;font-size:11px;font-weight:600;letter-spacing:1px;">INDUSTRIAL WAREHOUSE — LARGE SHUTTER</span>
+          </div>
+          <div style="background:#aaa;">
+            <div style="height:8px;background:linear-gradient(90deg,#999,#ccc,#999);margin:3px 0;"></div>
+            <div style="height:8px;background:linear-gradient(90deg,#999,#ccc,#999);margin:3px 0;"></div>
+            <div style="height:8px;background:linear-gradient(90deg,#999,#ccc,#999);margin:3px 0;"></div>
+            <div style="height:8px;background:linear-gradient(90deg,#999,#ccc,#999);margin:3px 0;"></div>
+            <div style="height:8px;background:linear-gradient(90deg,#999,#ccc,#999);margin:3px 0;"></div>
+            <div style="height:8px;background:linear-gradient(90deg,#999,#ccc,#999);margin:3px 0;"></div>
+            <div style="height:8px;background:linear-gradient(90deg,#999,#ccc,#999);margin:3px 0;"></div>
+            <div style="height:8px;background:linear-gradient(90deg,#999,#ccc,#999);margin:3px 0;"></div>
+          </div>
+        </div>
+        <p style="color:rgba(255,255,255,0.5);font-size:12px;margin-top:12px;letter-spacing:2px;">HEAVY INDUSTRIAL INSTALLATION</p>
+      </div>
+      <div class="gallery-overlay"><span>Industrial Warehouse Shutter</span></div>
+    </div>
+
+    <div class="gallery-item" style="background:linear-gradient(135deg,#2a2a2a,#444);">
+      <div style="width:100%;height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:8px;padding:20px;">
+        <div style="width:80%;border:2px solid #666;border-radius:3px;overflow:hidden;">
+          <div style="background:#999;">
+            <div style="height:6px;background:linear-gradient(90deg,#aaa,#ddd,#aaa);margin:2px 0;" ></div>
+            <div style="height:6px;background:linear-gradient(90deg,#aaa,#ddd,#aaa);margin:2px 0;"></div>
+            <div style="height:6px;background:linear-gradient(90deg,#aaa,#ddd,#aaa);margin:2px 0;"></div>
+            <div style="height:6px;background:linear-gradient(90deg,#aaa,#ddd,#aaa);margin:2px 0;"></div>
+            <div style="height:6px;background:linear-gradient(90deg,#aaa,#ddd,#aaa);margin:2px 0;"></div>
+            <div style="height:6px;background:linear-gradient(90deg,#aaa,#ddd,#aaa);margin:2px 0;"></div>
+          </div>
+        </div>
+        <p style="color:rgba(255,255,255,0.45);font-size:11px;letter-spacing:1px;">SHOP / COMMERCIAL</p>
+      </div>
+      <div class="gallery-overlay"><span>Commercial Shop Shutter</span></div>
+    </div>
+
+    <div class="gallery-item" style="background:linear-gradient(135deg,#1a1a2e,#2a2a3e);">
+      <div style="width:100%;height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:8px;padding:20px;">
+        <div style="display:flex;gap:6px;">
+          <div style="width:30%;border:2px solid #555;border-radius:2px;overflow:hidden;">
+            <div style="background:#aaa;">
+              <div style="height:5px;background:linear-gradient(90deg,#bbb,#eee,#bbb);margin:2px 0;"></div>
+              <div style="height:5px;background:linear-gradient(90deg,#bbb,#eee,#bbb);margin:2px 0;"></div>
+              <div style="height:5px;background:linear-gradient(90deg,#bbb,#eee,#bbb);margin:2px 0;"></div>
+              <div style="height:5px;background:linear-gradient(90deg,#bbb,#eee,#bbb);margin:2px 0;"></div>
+              <div style="height:5px;background:linear-gradient(90deg,#bbb,#eee,#bbb);margin:2px 0;"></div>
+            </div>
+          </div>
+          <div style="width:30%;border:2px solid #555;border-radius:2px;overflow:hidden;">
+            <div style="background:#aaa;">
+              <div style="height:5px;background:linear-gradient(90deg,#bbb,#eee,#bbb);margin:2px 0;"></div>
+              <div style="height:5px;background:linear-gradient(90deg,#bbb,#eee,#bbb);margin:2px 0;"></div>
+              <div style="height:5px;background:linear-gradient(90deg,#bbb,#eee,#bbb);margin:2px 0;"></div>
+              <div style="height:5px;background:linear-gradient(90deg,#bbb,#eee,#bbb);margin:2px 0;"></div>
+              <div style="height:5px;background:linear-gradient(90deg,#bbb,#eee,#bbb);margin:2px 0;"></div>
+            </div>
+          </div>
+          <div style="width:30%;border:2px solid #555;border-radius:2px;overflow:hidden;">
+            <div style="background:#aaa;">
+              <div style="height:5px;background:linear-gradient(90deg,#bbb,#eee,#bbb);margin:2px 0;"></div>
+              <div style="height:5px;background:linear-gradient(90deg,#bbb,#eee,#bbb);margin:2px 0;"></div>
+              <div style="height:5px;background:linear-gradient(90deg,#bbb,#eee,#bbb);margin:2px 0;"></div>
+              <div style="height:5px;background:linear-gradient(90deg,#bbb,#eee,#bbb);margin:2px 0;"></div>
+              <div style="height:5px;background:linear-gradient(90deg,#bbb,#eee,#bbb);margin:2px 0;"></div>
+            </div>
+          </div>
+        </div>
+        <p style="color:rgba(255,255,255,0.45);font-size:11px;letter-spacing:1px;">MULTIPLE UNIT INSTALL</p>
+      </div>
+      <div class="gallery-overlay"><span>4-Unit Industrial Installation</span></div>
+    </div>
+
+    <div class="gallery-item" style="background:linear-gradient(135deg,#111,#1a0000);">
+      <div style="width:100%;height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:8px;padding:20px;">
+        <div style="width:70%;border:2px solid #cc0000;border-radius:3px;overflow:hidden;">
+          <div style="background:#888;">
+            <div style="height:6px;background:linear-gradient(90deg,#999,#ccc,#999);margin:2px 0;"></div>
+            <div style="height:6px;background:linear-gradient(90deg,#999,#ccc,#999);margin:2px 0;"></div>
+            <div style="height:6px;background:linear-gradient(90deg,#999,#ccc,#999);margin:2px 0;"></div>
+            <div style="height:6px;background:linear-gradient(90deg,#999,#ccc,#999);margin:2px 0;"></div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <div style="width:12px;height:12px;border-radius:50%;background:#cc0000;"></div>
+          <span style="color:rgba(255,255,255,0.5);font-size:11px;letter-spacing:1px;">REMOTE CONTROLLED</span>
+        </div>
+      </div>
+      <div class="gallery-overlay"><span>Remote Controlled Shutter</span></div>
+    </div>
+
+    <div class="gallery-item" style="background:linear-gradient(135deg,#0d1117,#1a2030);">
+      <div style="width:100%;height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:8px;padding:20px;">
+        <div style="width:75%;border:2px solid #444;border-radius:2px;overflow:hidden;">
+          <div style="background:rgba(160,160,160,0.3);">
+            <div style="height:5px;background:rgba(180,180,180,0.4);margin:3px 0;"></div>
+            <div style="height:5px;background:rgba(180,180,180,0.4);margin:3px 0;"></div>
+            <div style="height:5px;background:rgba(180,180,180,0.4);margin:3px 0;"></div>
+            <div style="height:5px;background:rgba(180,180,180,0.4);margin:3px 0;"></div>
+            <div style="height:5px;background:rgba(180,180,180,0.4);margin:3px 0;"></div>
+            <div style="height:5px;background:rgba(180,180,180,0.4);margin:3px 0;"></div>
+          </div>
+        </div>
+        <p style="color:rgba(255,255,255,0.4);font-size:11px;letter-spacing:1px;">ROLLING GRILL TYPE</p>
+      </div>
+      <div class="gallery-overlay"><span>Rolling Grill Shutter</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="why-us" id="why-us">
+  <div class="section-label" style="color:#ff4444;">Why Choose Us</div>
+  <h2 class="section-title">The <span>Sagar</span> Advantage</h2>
+  <div class="section-line"></div>
+  <div class="why-grid">
+    <div class="why-card">
+      <div class="why-num">01</div>
+      <h4>Direct Manufacturer</h4>
+      <p>We manufacture directly — no middlemen. You get factory prices with the best quality steel and components.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-num">02</div>
+      <h4>15+ Years Experience</h4>
+      <p>Over a decade of expertise in rolling shutter installation across residential, commercial, and industrial sectors.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-num">03</div>
+      <h4>Custom Sizes</h4>
+      <p>All shutters are made to exact measurements. Any size, any opening — we fabricate to fit perfectly.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-num">04</div>
+      <h4>After-Sales Service</h4>
+      <p>We offer Annual Maintenance Contracts (AMC), fast repair service, and genuine spare parts supply.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-num">05</div>
+      <h4>Quality Materials</h4>
+      <p>We use only high-grade galvanized steel laths, heavy-duty springs, and corrosion-resistant hardware.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-num">06</div>
+      <h4>Pan Gujarat Service</h4>
+      <p>Serving Morbi, Rajkot, Jamnagar, Bhavnagar, Ahmedabad and all major cities across Gujarat.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="section-label">Get In Touch</div>
+  <h2 class="section-title">Contact <span>Us</span></h2>
+  <div class="section-line"></div>
+  <p class="section-desc">Get a free estimate for your rolling shutter requirement. We respond within 24 hours.</p>
+
+  <div class="contact-wrap">
+    <div class="contact-info">
+      <h3>Reach Us Directly</h3>
+
+      <div class="contact-item">
+        <span class="contact-icon">👤</span>
+        <div>
+          <strong>Mitul Patel</strong>
+          <span>Cell: +91 98982 68000</span>
+        </div>
+      </div>
+
+      <div class="contact-item">
+        <span class="contact-icon">👤</span>
+        <div>
+          <strong>Viral Patel</strong>
+          <span>Cell: +91 98981 12280</span>
+        </div>
+      </div>
+
+      <div class="contact-item">
+        <span class="contact-icon">📞</span>
+        <div>
+          <strong>Office Phone</strong>
+          <span>02827 – 252576</span>
+        </div>
+      </div>
+
+      <div class="contact-item">
+        <span class="contact-icon">✉️</span>
+        <div>
+          <strong>Email</strong>
+          <span>mmposhiya@gmail.com</span>
+        </div>
+      </div>
+
+      <div class="contact-item">
+        <span class="contact-icon">📍</span>
+        <div>
+          <strong>Location</strong>
+          <span>Morbi, Gujarat, India</span>
+        </div>
+      </div>
+
+      <div class="contact-item">
+        <span class="contact-icon">🕐</span>
+        <div>
+          <strong>Working Hours</strong>
+          <span>Mon–Sat: 9:00 AM – 7:00 PM</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-form">
+      <h3>Request a Quote</h3>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Your Name</label>
+          <input type="text" placeholder="Full Name"/>
+        </div>
+        <div class="form-group">
+          <label>Phone Number</label>
+          <input type="tel" placeholder="+91 XXXXX XXXXX"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" placeholder="your@email.com"/>
+      </div>
+      <div class="form-group">
+        <label>Shutter Type Required</label>
+        <select>
+          <option value="">-- Select Type --</option>
+          <option>Manual Rolling Shutter</option>
+          <option>Gear Type Shutter</option>
+          <option>Electric / Remote Shutter</option>
+          <option>Rolling Grill Shutter</option>
+          <option>Industrial Heavy Shutter</option>
+          <option>Raw Material Supply</option>
+          <option>Repair / AMC Service</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Message / Requirements</label>
+        <textarea placeholder="Please describe your requirements — size, quantity, location, etc."></textarea>
+      </div>
+      <button class="btn-submit" onclick="alert('Thank you! We will contact you shortly.\nCall us: +91 98982 68000')">
+        Send Enquiry →
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo"><span>S</span>agar Rolling Shutters ®</div>
+  <div class="footer-tagline">All Types of Steel Reseller &amp; Mfg. Rolling Shutters &amp; Fabrication Works</div>
+  <div class="footer-links">
+    <a href="#home">Home</a>
+    <a href="#services">Services</a>
+    <a href="#products">Products</a>
+    <a href="#why-us">Why Us</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <div class="footer-copy">© 2024 Sagar Rolling Shutters, Morbi, Gujarat. All Rights Reserved.</div>
+</footer>
+
+<!-- Floating Call Button -->
+<a href="tel:+919898268000" class="float-call" title="Call Now">📞</a>
+
+</body>
+</html>
